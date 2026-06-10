@@ -1,0 +1,58 @@
+@let potentialMoveMarks = getPotentialMoveMarks();
+<div class="absolute z-50 top-4 left-1/2 -translate-x-1/2">
+  <div class="flex flex-col gap-6">
+    @for (row of [].constructor(10); let y = $index; track $index) {
+      <div class="flex gap-6">
+        @for (col of [].constructor(9); let x = $index; track $index) {
+          @if (getChessAtPosition(x, y); as chessPiece) {
+            <app-chess
+              (click)="onChessClick(chessPiece)"
+              [chess]="chessPiece.piece"
+              [side]="chessPiece.side"
+              [isSelected]="chessMove?.x === chessPiece.x && chessMove?.y === chessPiece.y"
+              [isCaptureTarget]="
+                potentialMoveMarks.some(
+                  (mark) => mark.x === chessPiece?.x && mark.y === chessPiece?.y
+                )
+              "
+            ></app-chess>
+          } @else {
+            <div
+              (click)="updateChessPosition(x, y)"
+              class="relative flex h-10 w-10 items-center justify-center"
+            >
+              @if (getBoardMark(x, y); as mark) {
+                @if (mark.topLeft) {
+                  <div
+                    class="absolute left-2 top-2 h-2 w-2 border-r border-b border-slate-700"
+                  ></div>
+                }
+
+                @if (mark.topRight) {
+                  <div
+                    class="absolute right-2 top-2 h-2 w-2 border-l border-b border-slate-700"
+                  ></div>
+                }
+
+                @if (mark.bottomLeft) {
+                  <div
+                    class="absolute bottom-2 left-2 h-2 w-2 border-r border-t border-slate-700"
+                  ></div>
+                }
+
+                @if (mark.bottomRight) {
+                  <div
+                    class="absolute bottom-2 right-2 h-2 w-2 border-l border-t border-slate-700"
+                  ></div>
+                }
+              }
+              @if (potentialMoveMarks.some((mark) => mark.x === x && mark.y === y)) {
+                <div class="-mt-2 h-4 w-4 rounded-full bg-slate-700/50"></div>
+              }
+            </div>
+          }
+        }
+      </div>
+    }
+  </div>
+</div>

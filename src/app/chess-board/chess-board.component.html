@@ -1,0 +1,56 @@
+<div
+  id="board-container"
+  class="mx-auto w-fit rounded-4xl border border-white/80 bg-white/75 p-4 shadow-[0_28px_70px_rgba(79,70,229,0.18)] ring-1 ring-sky-100/80 backdrop-blur sm:p-5"
+>
+  <div
+    class="board-frame rounded-[1.35rem] bg-linear-to-br from-white via-[#fff3c7] to-[#cffafe] p-3"
+  >
+    <div
+      class="board-face flex flex-col overflow-hidden rounded-xl border-[3px] border-[#243047] bg-[#ffe7a8]"
+    >
+      @for (row of [].constructor(9); let rowIndex = $index; track rowIndex) {
+        <div class="flex">
+          @for (col of [].constructor(8); let colIndex = $index; track colIndex) {
+            @if (rowIndex === 4) {
+              <div
+                class="river-cell relative h-16 w-16 overflow-hidden bg-[linear-gradient(135deg,#0ea5e9,#22d3ee_45%,#99f6e4)] shadow-[inset_0_1px_0_rgba(255,255,255,0.65),inset_0_-14px_28px_rgba(6,78,100,0.22)]"
+                [class.border-l-2]="colIndex === 0"
+                [class.border-r-2]="colIndex === 7"
+              ></div>
+            } @else {
+              <div
+                class="relative h-16 w-16 border border-[#243047]/80 bg-[linear-gradient(145deg,#fff5c7,#ffd47f_58%,#ffb56b)] shadow-[inset_0_1px_0_rgba(255,255,255,0.55)]"
+              >
+                @if (isPalaceDiagonal(rowIndex, colIndex, 'down-right')) {
+                  <div
+                    class="absolute left-0 top-0 h-0.5 w-[5.657rem] origin-top-left rotate-45 bg-[#243047]/80"
+                  ></div>
+                }
+
+                @if (isPalaceDiagonal(rowIndex, colIndex, 'down-left')) {
+                  <div
+                    class="absolute right-0 top-0 h-0.5 w-[5.657rem] origin-top-right -rotate-45 bg-[#243047]/80"
+                  ></div>
+                }
+
+                @if (isPalaceDiagonal(rowIndex, colIndex, 'up-right')) {
+                  <div
+                    class="absolute bottom-0 left-0 h-0.5 w-[5.657rem] origin-bottom-left -rotate-45 bg-[#243047]/80"
+                  ></div>
+                }
+
+                @if (isPalaceDiagonal(rowIndex, colIndex, 'up-left')) {
+                  <div
+                    class="absolute bottom-0 right-0 h-0.5 w-[5.657rem] origin-bottom-right rotate-45 bg-[#243047]/80"
+                  ></div>
+                }
+              </div>
+            }
+          }
+        </div>
+      }
+    </div>
+  </div>
+
+  <app-chess-position></app-chess-position>
+</div>

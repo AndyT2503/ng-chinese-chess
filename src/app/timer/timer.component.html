@@ -1,0 +1,111 @@
+<div
+  class="flex min-w-[340px] flex-col gap-4 rounded-2xl border border-white/80 bg-white/75 p-6 shadow-[0_28px_70px_rgba(79,70,229,0.18)] ring-1 ring-sky-100/80 backdrop-blur"
+>
+  <div class="flex gap-2">
+    @for (mode of modeOptions; track mode.value) {
+      <button
+        class="flex-1 cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium transition-all duration-150"
+        [ngClass]="{
+          'border-blue-600 bg-blue-600 text-white shadow-md': timerService.mode() === mode.value,
+          'border-gray-300 bg-white text-gray-700 hover:bg-gray-50':
+            timerService.mode() !== mode.value,
+        }"
+        (click)="changeMode(mode.value)"
+      >
+        {{ mode.label }}
+      </button>
+    }
+  </div>
+  <div
+    class="rounded-xl border px-8 py-4 transition-all duration-200"
+    [ngClass]="{
+      'border-slate-700 bg-slate-50 shadow-lg': chessService.turn() === 'black',
+      'border-gray-300 bg-white': chessService.turn() !== 'black',
+    }"
+  >
+    <div
+      class="mb-2 text-center text-xs font-semibold uppercase tracking-[0.3em]"
+      [ngClass]="{
+        'text-slate-700': chessService.turn() === 'black',
+        'text-gray-400': chessService.turn() !== 'black',
+      }"
+    >
+      Black Side
+    </div>
+
+    <div
+      class="text-center text-5xl font-bold tracking-wider"
+      [ngClass]="{
+        'text-slate-800': chessService.turn() === 'black',
+        'text-gray-400': chessService.turn() !== 'black',
+      }"
+    >
+      {{ timerService.blackTime() | formatTime }}
+    </div>
+
+    <div
+      class="mt-2 text-center text-xs font-medium"
+      [ngClass]="{
+        'text-slate-500': chessService.turn() === 'black',
+        'text-transparent': chessService.turn() !== 'black',
+      }"
+    >
+      ● Your Turn
+    </div>
+  </div>
+
+  <div
+    class="rounded-xl border px-8 py-4 transition-all duration-200"
+    [ngClass]="{
+      'border-red-600 bg-red-50 shadow-lg': chessService.turn() === 'red',
+      'border-gray-300 bg-white': chessService.turn() !== 'red',
+    }"
+  >
+    <div
+      class="mb-2 text-center text-xs font-semibold uppercase tracking-[0.3em]"
+      [ngClass]="{
+        'text-red-600': chessService.turn() === 'red',
+        'text-gray-400': chessService.turn() !== 'red',
+      }"
+    >
+      Red Side
+    </div>
+
+    <div
+      class="text-center text-5xl font-bold tracking-wider"
+      [ngClass]="{
+        'text-red-700': chessService.turn() === 'red',
+        'text-gray-400': chessService.turn() !== 'red',
+      }"
+    >
+      {{ timerService.redTime() | formatTime }}
+    </div>
+
+    <div
+      class="mt-2 text-center text-xs font-medium"
+      [ngClass]="{
+        'text-red-500': chessService.turn() === 'red',
+        'text-transparent': chessService.turn() !== 'red',
+      }"
+    >
+      ● Your Turn
+    </div>
+  </div>
+
+  <button
+    class="h-14 w-full cursor-pointer rounded-xl border transition-all duration-150 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-[0.98]"
+    [ngClass]="{
+      'border-red-700 bg-red-600 hover:bg-red-700': chessService.turn() === 'red',
+
+      'border-slate-800 bg-slate-700 hover:bg-slate-800': chessService.turn() === 'black',
+    }"
+    (click)="clickToggleTimer()"
+  ></button>
+
+  <button
+    class="h-14 w-full cursor-pointer rounded-xl border transition-all duration-150 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:scale-[0.98]"
+    (click)="chessService.resetGame()"
+  >
+    Restart Game
+  </button>
+</div>

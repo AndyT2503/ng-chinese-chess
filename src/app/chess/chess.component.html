@@ -1,0 +1,18 @@
+<div
+  class="flex h-10 w-10 items-center justify-center rounded-full border-2 text-xl font-bold shadow-md select-none transition-transform"
+  [ngClass]="{
+    'border-red-700 bg-gray-200 from-red-50 to-red-200 text-red-700': side() === 'red',
+    'border-slate-700 bg-amber-50 from-slate-100 to-slate-300 text-slate-800': side() === 'black',
+    'ring-4 ring-red-400 scale-110 shadow-[0_0_20px_rgba(248,113,113,0.8)]':
+      isSelected() && side() === 'red',
+    'ring-4 ring-slate-400 scale-110 shadow-[0_0_20px_rgba(148,163,184,0.8)]':
+      isSelected() && side() === 'black',
+    'ring-4 ring-red-600/50 scale-110 shadow-[0_0_20px_rgba(248,113,113,0.8)]':
+      isCaptureTarget() && side() === 'red',
+    'ring-4 ring-slate-600/50 scale-110 shadow-[0_0_20px_rgba(148,163,184,0.8)]':
+      isCaptureTarget() && side() === 'black',
+    'hover:scale-105 cursor-pointer': isClickable(),
+  }"
+>
+  {{ chessUnicode() }}
+</div>

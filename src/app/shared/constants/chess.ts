@@ -20,3 +20,5 @@ export const CHESS_PIECES = {
   /** Quân Tốt */
   SOLDIER: 'Soldier',
 } as const;
+
+export type ChessPiece = (typeof CHESS_PIECES)[keyof typeof CHESS_PIECES];
